@@ -13,7 +13,7 @@ type CardDraft = {
     cvv: number
 }
 
-export default function CardForm({ register, errors }: FormularioProps) {
+export default function CardForm({ register, errors }: FormularioProps) {   
 
     return (
         <>
@@ -25,9 +25,11 @@ export default function CardForm({ register, errors }: FormularioProps) {
                     type="text"
                     id="cardholder"
                     placeholder="e.g. Jane Appleseed"
-                    className="border-lightViolet border-solid border-2 max-w-[327px] h-[45px] rounded-lg p-4"
+                    maxLength={40}
+                    className={`${errors.cardholder ? 'border-red' : 'border-lightViolet'} border-solid border-2 max-w-[327px] h-[45px] rounded-lg p-4 outline-none focus:border-violet`}
                     {...register('cardholder', {
-                        required: 'The cardholder name is obligatory.'
+                        required: 'The cardholder name is obligatory.',
+                        maxLength: 40
                     })}
                 />
                 {errors.cardholder && (
@@ -42,10 +44,11 @@ export default function CardForm({ register, errors }: FormularioProps) {
                     card number
                 </label>
                 <input
-                    type="number"
+                    type="text"
                     id="cardNumber"
+                    maxLength={16}
                     placeholder="eg. 1234 5678 9123 0000"
-                    className="border-lightViolet border-solid border-2 max-w-[327px] h-[45px] rounded-lg p-4"
+                    className={`${errors.cardholder ? 'border-red' : 'border-lightViolet'} border-solid border-2 max-w-[327px] h-[45px] rounded-lg p-4 outline-none focus:border-violet`}
                     {...register('cardNumber', {
                         required: 'Wrong format, numbers only',
                         maxLength: 16
@@ -67,11 +70,12 @@ export default function CardForm({ register, errors }: FormularioProps) {
                     <div className="flex flex-row gap-2">
                         <div className="flex flex-col">
                             <input
-                                type="number"
+                                type="text"
                                 id="expDate"
                                 placeholder="MM"
-                                className="border-lightViolet border-solid border-2 max-w-[72px] h-[45px] rounded-lg p-4"
-                                {...register('expireYear' && 'expireMounth', {
+                                maxLength={2}
+                                className={`${errors.expireMounth ? 'border-red' : 'border-lightViolet'} border-lightViolet border-solid border-2 max-w-[72px] h-[45px] rounded-lg ps-4 outline-none focus:border-violet`}
+                                {...register('expireMounth', {
                                     required: "Can't be black",
                                     maxLength: 2
                                 })}
@@ -84,10 +88,15 @@ export default function CardForm({ register, errors }: FormularioProps) {
 
                         </div>
                         <input
-                            type="number"
+                            type="text"
                             id="expDate"
                             placeholder="YY"
-                            className="border-lightViolet border-solid border-2 max-w-[72px] h-[45px] rounded-lg p-4"
+                            maxLength={2}
+                            className={`${errors.expireYear ? 'border-red' : 'border-lightViolet'} border-lightViolet border-solid border-2 max-w-[72px] h-[45px] rounded-lg ps-4 outline-none focus:border-violet`}
+                            {...register('expireYear', {
+                                required: "Can't be black",
+                                maxLength: 2
+                            })}
                         />
                     </div>
                 </div>
@@ -97,13 +106,14 @@ export default function CardForm({ register, errors }: FormularioProps) {
                         cvv
                     </label>
                     <input
-                        type="number"
+                        type="text"
                         id="cvv"
                         placeholder="e.g. 123"
-                        className="border-lightViolet border-solid border-2 max-w-[164px] h-[45px] rounded-lg p-4"
+                        maxLength={3}
+                        className={`${errors.expireYear ? 'border-red' : 'border-lightViolet'} border-lightViolet border-solid border-2 max-w-[164px] h-[45px] rounded-lg p-4 outline-none focus:border-violet`}
                         {...register('cvv', {
                             required: "Can't be black",
-                            minLength: 3, maxLength: 4
+                            maxLength: 3
                         })}
                     />
                     {errors.cvv && (

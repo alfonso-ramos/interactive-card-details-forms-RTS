@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import CardForm from "./components/CardForm"
+import SuccessRegister from "./components/SuccessRegister"
+import DisplayCards from './components/DisplayCards';
 
 type CardDraft = {
   cardholder: string,
-  cardNumber: number,
+  cardNumber: string,
   expireMounth: number,
   expireYear: number,
   cvv: number
@@ -13,39 +15,67 @@ type CardDraft = {
 
 function App() {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<CardDraft>()
+  const { register, watch, handleSubmit, formState: { errors } } = useForm<CardDraft>()
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false)
+  const { cardholder, cardNumber, expireMounth, expireYear, cvv } = watch()
 
   const onSubmit = () => {
-    setFormSubmitted(true);
+    if (!formSubmitted) {
+      console.log('submit')
+      setFormSubmitted(true)
+    } else if (formSubmitted){
+      console.log('continue')
+      setFormSubmitted(false)
+    }
+  };
+
+  const formatCreditCardNumber = (num: string) => {
+    if (!num) return '';
+    return num.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
   };
 
   return (
     <>
-      <div className="bg-mobile h-[240px] bg-no-repeat bg-cover xl:bg-desktop">
-
-      </div>
       <div>
-        {!formSubmitted && (
-          <form
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
-            className="w-[327px] mx-auto"
-          >
-            <CardForm
-              register={register}
-              errors={errors}
-            />
-            <input
-              type="submit"
-              value="Confirm"
-              className="w-full bg-veryDarkViolet text-white font-bold rounded-md uppercase h-[53px] hover:cursor-pointer"
-            />
-          </form>
-        )}
-        {formSubmitted && (
-          <p>Gracias por llenar el formulario</p>
-        )}
+        <DisplayCards 
+          cardholder={cardholder}
+          cardNumber={cardNumber}
+          expireMounth={expireMounth}
+          expireYear={expireYear}
+          cvv={cvv}
+          formatCreditCardNumber={formatCreditCardNumber}
+        />
+        
+        <div className="mt-[90px]">
+          {!formSubmitted && (
+            <form
+              noValidate
+              onSubmit={handleSubmit(onSubmit)}
+              className="w-[327px] mx-auto"
+            >
+              <CardForm
+                register={register}
+                errors={errors}
+              />
+              <input
+                type="submit"
+                value="Confirm"
+                className="w-full bg-veryDarkViolet text-white font-bold rounded-md uppercase h-[53px] hover:cursor-pointer"
+              />
+            </form>
+          )}
+          {formSubmitted && (
+            <div className="w-[327px] mx-auto">
+              <SuccessRegister />
+              <input
+                type="submit"
+                value="Continue"
+                onSubmit={handleSubmit(onSubmit)}
+                className="w-full bg-veryDarkViolet text-white font-bold rounded-md uppercase h-[53px] hover:cursor-pointer mt-12"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   )
