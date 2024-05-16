@@ -10,13 +10,13 @@ type DisplayCardsProps = {
 export default function DisplayCards({ cardholder, cardNumber, expireMounth, expireYear, cvv, formatCreditCardNumber }: DisplayCardsProps) {
     return (
         <>
-            <div className="bg-mobile h-[240px] bg-no-repeat bg-cover xl:bg-desktop xl:h-screen">
+            <div className="bg-mobile h-[240px] bg-no-repeat bg-cover xl:bg-desktop xl:h-screen xl:w-[483px]">
                 <div className="w-[343px]">
-                    <div className="bg-card-back bg-cover bg-no-repeat w-[286px] h-[157px] absolute right-4 mt-8 md:right-36 xl:left-64 xl:top-[275px]">
+                    <div className="bg-card-back bg-cover bg-no-repeat w-[286px] h-[157px] absolute right-4 mt-8 md:right-36 xl:left-80 xl:top-[275px]">
                         <p className="absolute right-9 top-[70px] text-xs text-white">{cvv || '000'}</p>
                     </div>
 
-                    <div className="bg-card-front bg-cover bg-no-repeat w-[286px] h-[157px] absolute left-4 top-[120px] md:left-36 xl:left-40 ">
+                    <div className="bg-card-front bg-cover bg-no-repeat w-[286px] h-[157px] absolute left-4 top-[120px] md:left-36 xl:left-64 ">
                         <img
                             src="/images/card-logo.svg"
                             alt=""

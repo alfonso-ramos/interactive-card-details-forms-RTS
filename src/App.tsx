@@ -15,7 +15,7 @@ type CardDraft = {
 
 function App() {
 
-  const { register, watch, handleSubmit, formState: { errors } } = useForm<CardDraft>()
+  const { register, watch, handleSubmit, reset, formState: { errors } } = useForm<CardDraft>()
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false)
   const { cardholder, cardNumber, expireMounth, expireYear, cvv } = watch()
 
@@ -23,9 +23,10 @@ function App() {
     if (!formSubmitted) {
       console.log('submit')
       setFormSubmitted(true)
-    } else if (formSubmitted){
+    } else {
       console.log('continue')
       setFormSubmitted(false)
+      reset()
     }
   };
 
@@ -37,7 +38,7 @@ function App() {
   return (
     <>
       <div className="xl:flex gap-[350px]">
-        <DisplayCards 
+        <DisplayCards
           cardholder={cardholder}
           cardNumber={cardNumber}
           expireMounth={expireMounth}
@@ -45,7 +46,7 @@ function App() {
           cvv={cvv}
           formatCreditCardNumber={formatCreditCardNumber}
         />
-        
+
         <div className="mt-[90px] xl:mt-[120px]">
           {!formSubmitted && (
             <form
@@ -67,12 +68,13 @@ function App() {
           {formSubmitted && (
             <div className="w-[327px] mx-auto">
               <SuccessRegister />
-              <input
-                type="submit"
-                value="Continue"
-                onSubmit={handleSubmit(onSubmit)}
+              <button
+                onClick={() => {
+                  setFormSubmitted(false)
+                  reset()
+                }}
                 className="w-full bg-veryDarkViolet text-white font-bold rounded-md uppercase h-[53px] hover:cursor-pointer mt-12"
-              />
+              >Continue</button>
             </div>
           )}
         </div>
