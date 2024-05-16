@@ -36,7 +36,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="xl:flex gap-[350px]">
         <DisplayCards 
           cardholder={cardholder}
           cardNumber={cardNumber}
@@ -46,7 +46,7 @@ function App() {
           formatCreditCardNumber={formatCreditCardNumber}
         />
         
-        <div className="mt-[90px]">
+        <div className="mt-[90px] xl:mt-[120px]">
           {!formSubmitted && (
             <form
               noValidate
